@@ -1,18 +1,19 @@
 <p><a target="_blank" href="https://app.eraser.io/workspace/PDMLqW8ynWhYWrt5FtcB" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
 
-# Stream Processing Engine with S3 Integration
-A high-performance stream processing engine designed to handle real-time data streams at scale, featuring leaderless fault tolerance, seamless integration with Amazon S3 for data storage, and real-time monitoring with a Java-based dashboard.
+# Cybersecurity-Oriented Stream Processing Engine with S3 Integration
+A real-time stream processing engine built for large-scale, cybersecurity-focused data analysis. Designed to identify and respond to security threats, process security logs, and enforce compliance regulations, the engine leverages leaderless fault tolerance and integrates seamlessly with Amazon S3 for secure, scalable data storage.
 
 
 
 ## Features
-- **Stream Processing**: Ingests, filters, transforms, and aggregates large-scale data streams.
-- **Fault Tolerance**: Leaderless architecture with quorum-based consistency for high availability and data reliability.
-- **Storage Integration**: Stores processed data on Amazon S3 for scalability and durability.
-- **Real-Time Monitoring**: Dashboard to visualise throughput, latency, and system health.
+- **Real-Time Threat Detection**: Processes logs and network traffic to detect anomalies and potential security breaches.
+- **Log Aggregation and Analysis**: Aggregates and analyses distributed logs for centralised security insights.
+- **Leaderless Fault Tolerance**: Quorum-based consistency ensures high availability and reliability.
 - **Dynamic Scaling**: Automatically adjusts processing nodes based on workload.
-- **Kafka Integration**: Uses Kafka for efficient stream ingestion and inter-node communication.
-- **Cross-Language Implementation**: Core processing in C++ for performance, with Java for orchestration and monitoring.
+- **Data Encryption and Masking**: Ensures secure processing and storage of sensitive information.
+- **Customizable Dashboards**: Real-time security metrics for monitoring attack trends and system health.
+- **Kafka Integration**: Efficient stream ingestion and inter-node communication.
+- **AWS S3 Storage**: Secure and durable storage for processed security data.
 
 
 ## Architecture Overview
@@ -24,24 +25,29 @@ A high-performance stream processing engine designed to handle real-time data st
     - Implements leaderless fault tolerance using quorum-based consistency.
 - **Storage (AWS S3)**:
     - Durable and scalable data storage using AWS S3.
-    - Supports efficient writing and retrieval of processed data.
+    - Encryption for sensitive information.
 - **Monitoring (Java)**:
-    - A real-time monitoring dashboard built with Spring Boot.
-    - Displays key metrics such as throughput, latency, node health, and task status.
+    - Real-time visualization of security metrics such as intrusion patterns and attack trends.
+    - Alerts for suspicious activities or failures.
 ## 
-### **Architecture Overview**
-- **Ingestion Layer (Java):**
-    - Kafka consumer to ingest data streams.
-    - Partitions data and assigns processing tasks to nodes.
-- **Processing Layer (C++):**
-    - Implements core processing operations (filtering, transformations, aggregation).
-    - Implements leaderless fault tolerance using quorum-based consistency.
-- **Storage (Amazon S3):**
-    - Durable and scalable data storage using Amazon S3.
-    - Supports efficient writing and retrieval of processed data.
-- **Monitoring (Java):**
-    - A real-time monitoring dashboard built with Spring Boot.
-    - Displays key metrics such as throughput, latency, node health, and task status.
+### **Requirements**
+- **C++ :**
+    - Boost (networking and concurrency)
+    - Kafka client library
+    - Protobufs/gRPC
+- **Java:**
+    - spring boot
+    - kafka client
+    - prometheus (metrics collection)
+    - grafana (vizulization)
+- **AWS S3**
+    - AWS SDK for C++/Java
+
+
+## Usage
+- **Submit Security Logs**: Send logs via Kafka for real-time analysis.
+- **Detect Threats**: Automatically identifies anomalies and potential breaches.
+- **View Metrics**: Use the monitoring dashboard to track security status and trends.
 
 
 ### **Milestones:**
