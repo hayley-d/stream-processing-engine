@@ -9,7 +9,7 @@ A high-performance stream processing engine designed to handle real-time data st
 - **Stream Processing**: Ingests, filters, transforms, and aggregates large-scale data streams.
 - **Fault Tolerance**: Leaderless architecture with quorum-based consistency for high availability and data reliability.
 - **Storage Integration**: Stores processed data on Amazon S3 for scalability and durability.
-- **Real-Time Monitoring**: Dashboard to visualize throughput, latency, and system health.
+- **Real-Time Monitoring**: Dashboard to visualise throughput, latency, and system health.
 - **Dynamic Scaling**: Automatically adjusts processing nodes based on workload.
 - **Kafka Integration**: Uses Kafka for efficient stream ingestion and inter-node communication.
 - **Cross-Language Implementation**: Core processing in C++ for performance, with Java for orchestration and monitoring.
@@ -22,8 +22,8 @@ A high-performance stream processing engine designed to handle real-time data st
 - **Processing Layer (C++)**:
     - Implements core processing operations (filtering, transformations, aggregation).
     - Implements leaderless fault tolerance using quorum-based consistency.
-- **Storage (Amazon S3)**:
-    - Durable and scalable data storage using Amazon S3.
+- **Storage (AWS S3)**:
+    - Durable and scalable data storage using AWS S3.
     - Supports efficient writing and retrieval of processed data.
 - **Monitoring (Java)**:
     - A real-time monitoring dashboard built with Spring Boot.
@@ -58,7 +58,7 @@ A high-performance stream processing engine designed to handle real-time data st
 - Add fault tolerance (leaderless or Raft-based).
 #### **Phase 4: Storage Integration (2 Weeks)**
 - Write processed data to S3 or MongoDB.
-- Implement efficient serialization (Protobuf or Avro).
+- Implement efficient serialisation (Protobuf).
 #### **Phase 5: Dashboard and Monitoring (2 Weeks)**
 - Build a Java-based monitoring dashboard.
 - Integrate Prometheus/Grafana for advanced metrics.
@@ -73,8 +73,8 @@ A high-performance stream processing engine designed to handle real-time data st
     - Kafka (for stream ingestion and partitioning)
     - gRPC (for inter-node communication)
     - Boost.Asio (for networking)
-    - Protocol Buffers (for serialization)
-    - Amazon S3 SDK (for storage integration)
+    - Protocol Buffers (for serialisation)
+    - AWS S3 SDK (for storage integration)
     - Spring Boot (for monitoring dashboard)
 - [x] **Set up version control** (e.g., Git repository)
 ---
