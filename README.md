@@ -13,7 +13,7 @@ A real-time stream processing engine built for large-scale, cybersecurity-focuse
 - **Data Encryption and Masking**: Ensures secure processing and storage of sensitive information.
 - **Customizable Dashboards**: Real-time security metrics for monitoring attack trends and system health.
 - **Kafka Integration**: Efficient stream ingestion and inter-node communication.
-- **AWS S3 Storage**: Secure and durable storage for processed security data.
+- **OLAP Cubes for Advanced Analytics**: Enables historical and multidimensional analysis of processed security data.
 
 
 ## Architecture Overview
@@ -23,12 +23,19 @@ A real-time stream processing engine built for large-scale, cybersecurity-focuse
 - **Processing Layer (C++)**:
     - Implements core processing operations (filtering, transformations, aggregation).
     - Implements leaderless fault tolerance using quorum-based consistency.
+    - Add a post-processing module to aggregate and structure data into **OLAP-compatible formats.**
+    - Integrate libraries for efficient cube creation, such as Arrow or Kylin (via external APIs).
+- **OLAP Cube Processing (C++)**:
+    - Periodically aggregates processed data into OLAP-compatible formats for historical analysis.
+    - Stores pre-aggregated data in Amazon S3 for efficient querying.
 - **Storage (AWS S3)**:
     - Durable and scalable data storage using AWS S3.
     - Encryption for sensitive information.
+    - **Store OLAP cubes** in a compressed, query-optimized format (e.g., Parquet or ORC).
 - **Monitoring (Java)**:
     - Real-time visualization of security metrics such as intrusion patterns and attack trends.
     - Alerts for suspicious activities or failures.
+    - Build OLAP-querying endpoints for advanced visualization.
 ## 
 ### **Requirements**
 - **C++ :**
