@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "ServerEvent",
+  "namespace": "com.streamprocessing",
+  "fields": [
+    {"name": "eventId", "type": "string"},
+    {"name": "sourceIp", "type": "string"},
+    {"name": "destinationIp", "type": "string"},
+    {"name": "eventType", "type": "string"},
+    {"name": "timestamp", "type": "long"},
+    {"name": "userId", "type":"string"},
+    {"name": "sessionId", "type":"string"},
+    {"name": "details", "type": "string"},
+  ]
+}
+
+

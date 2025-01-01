@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "ApiEvent",
+  "namespace": "com.streamprocessing",
+  "fields": [
+    {"name": "eventId", "type": "string"},
+    {"name": "sourceIp", "type": "string"},
+    {"name": "destinationIp", "type": "string"},
+    {"name": "timestamp", "type": "long"},
+    {"name": "method", "type": "string"},
+    {"name": "endpoint", "type": "string"},
+    {"name": "statusCode", "type": "int"},
+    {"name": "responseTime", "type": "long"},
+    {"name": "userAgent", "type": "string"}
+  ]
+}
+
