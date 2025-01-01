@@ -4,3 +4,9 @@
 
 ### KafkaConsumer.java
 - Encapsulates the logic for consuming data streams from kafka
+
+### PartitionManager.java
+- Handles assigning streams to partitions for parallel processing
+
+### Config.java
+- Manages configuration settings for kafka(broker addresses,topics,consumer groups)
