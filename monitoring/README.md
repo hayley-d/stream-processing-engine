@@ -10,4 +10,9 @@ Keeps monitoring seporate and ensures that obervability tools do not interfear w
 ### MetricsAggregarot.java
 - Collects and aggregates metrics from all components (throughput,latency,errors)
 
-###
+### HealthChecker.java
+- Checks the sytsem health and reports issues
+
+### Logger.java
+- Log4
+- centralized logging for the entire system
