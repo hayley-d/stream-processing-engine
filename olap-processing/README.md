@@ -9,3 +9,6 @@ Builds on the processing engine structuring data for long term storage and analy
 
 ### S3StorageManager
 - Manages communication with S3 including storing cubes in Parquet/ORC formats
+
+### Config
+- Configuration for the cube aggregation (time intervals,data dimenstions)
