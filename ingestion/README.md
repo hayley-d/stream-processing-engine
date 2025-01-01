@@ -1,3 +1,6 @@
+## Ingestions system
+Isolates the Kafka-specific code and keeps the stream ingestion logic modular and maintainable.
+
 ### Main.java
 - Entry point for the ingestion system. 
 - Initializes the kafka consumers and sets up partitioning logic.
