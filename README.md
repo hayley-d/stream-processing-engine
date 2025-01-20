@@ -1,169 +1,53 @@
-<p><a target="_blank" href="https://app.eraser.io/workspace/PDMLqW8ynWhYWrt5FtcB" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
+<p><a target="_blank" href="https://app.eraser.io/workspace/CWCfygfB1w55luilceE3" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
 
-# Cybersecurity-Oriented Stream Processing Engine with S3 Integration
-A real-time stream processing engine built for large-scale, cybersecurity-focused data analysis. Designed to identify and respond to security threats, process security logs, and enforce compliance regulations, the engine leverages leaderless fault tolerance and integrates seamlessly with Amazon S3 for secure, scalable data storage.
-
-
+# Stream Processing Engine with Distributed OLAP Insights
+This is a scalable and fault-tolerant distributed system designed to process high-throughput data streams while providing insightful analytics through an OLAP (Online Analytical Processing) cube. The engine is optimized for real-time performance, load balancing, and fault tolerance, aligning with modern distributed system principles. Seamless integration with Amazon S3 ensures secure and scalable data storage for OLAP cubes.
 
 ## Features
-- **Real-Time Threat Detection**: Processes logs and network traffic to detect anomalies and potential security breaches.
-- **Log Aggregation and Analysis**: Aggregates and analyses distributed logs for centralised security insights.
-- **Leaderless Fault Tolerance**: Quorum-based consistency ensures high availability and reliability.
-- **Dynamic Scaling**: Automatically adjusts processing nodes based on workload.
-- **Data Encryption and Masking**: Ensures secure processing and storage of sensitive information.
-- **Customizable Dashboards**: Real-time security metrics for monitoring attack trends and system health.
-- **Kafka Integration**: Efficient stream ingestion and inter-node communication.
-- **OLAP Cubes for Advanced Analytics**: Enables historical and multidimensional analysis of processed security data.
-
-
+- **Real-Time Stream Processing**:
+    - Ingest and process high-throughput streams of data in real-time.
+    - Support for sharding and partitioning for scalability.
+- **Load Balancing and Scaling Insights**: 
+    - Analyze the system's ability to distribute load efficiently across nodes.
+    - Identify scaling needs dynamically to ensure optimal resource usage.
+- **Fault Tolerance and Scalability**: 
+    - Implements leaderless fault tolerance for high availability.
+    - Dynamically scales to handle increased workloads, ensuring high performance even during peak traffic.
+- **Analytics Dashboards**: 
+    - Real-time load balancing and scaling metrics for monitoring trends and system health.
+- **Distributed OLAP Cube**: 
+    - Analyze data streams across multiple dimensions, latency, throughput, load distribution, and network performance.
+    - Leverages Amazon S3 for efficient, scalable storage and querying.
+    - Supports historical and real-time data analysis.
+    - Query Examples:
+        - "Which nodes in the cluster have the highest error rates?"
+        - "What are the latency patterns for specific regions over time?"
+        - "How does the load distribution vary across nodes and regions during peak traffic?"
+        - "Which nodes are underutilized or overloaded in real-time?"
 ## Architecture Overview
 - **Ingestion Layer (Java)**:
     - Kafka consumer to ingest data streams.
-    - Partitions data and assigns processing tasks to nodes.
+    - Ensures efficient partitioning for parallel processing.
 - **Processing Layer (C++)**:
     - Implements core processing operations (filtering, transformations, aggregation).
     - Implements leaderless fault tolerance using quorum-based consistency.
-    - Add a post-processing module to aggregate and structure data into **OLAP-compatible formats.**
-    - Integrate libraries for efficient cube creation, such as Arrow or Kylin (via external APIs).
+    - Supports stream joins and windowing for complex analytics.
 - **OLAP Cube Processing (C++)**:
-    - Periodically aggregates processed data into OLAP-compatible formats for historical analysis.
-    - Stores pre-aggregated data in Amazon S3 for efficient querying.
-- **Storage (AWS S3)**:
-    - Durable and scalable data storage using AWS S3.
-    - Encryption for sensitive information.
-    - **Store OLAP cubes** in a compressed, query-optimized format (e.g., Parquet or ORC).
+    - Provides multi-dimensional analysis across metrics like latency, node performance, and network utilization.
+    - Leverages Amazon S3 for efficient querying and scalability.
 - **Monitoring (Java)**:
-    - Real-time visualization of security metrics such as intrusion patterns and attack trends.
-    - Alerts for suspicious activities or failures.
-    - Build OLAP-querying endpoints for advanced visualization.
-## 
-### **Requirements**
-- **C++ :**
-    - Boost (networking and concurrency)
-    - Kafka client library
-    - Protobufs/gRPC
-- **Java:**
-    - spring boot
-    - kafka client
-    - prometheus (metrics collection)
-    - grafana (vizulization)
-- **AWS S3**
-    - AWS SDK for C++/Java
-
-
-## Usage
-- **Submit Security Logs**: Send logs via Kafka for real-time analysis.
-- **Detect Threats**: Automatically identifies anomalies and potential breaches.
-- **View Metrics**: Use the monitoring dashboard to track security status and trends.
-
-
-### **Milestones:**
-#### **Phase 1: Design and Setup (1 Week)**
-- Define architecture and key APIs.
-- Set up development environments for C++ and Java.
-#### **Phase 2: Ingestion Layer (2 Weeks)**
-- Implement Kafka consumers in Java.
-- Develop APIs for submitting jobs.
-- Partition data and distribute to nodes.
-#### **Phase 3: Processing Engine (4 Weeks)**
-- Build stream processing core in C++.
-- Implement basic operations: filtering, transformations, windowing.
-- Add fault tolerance (leaderless or Raft-based).
-#### **Phase 4: Storage Integration (2 Weeks)**
-- Write processed data to S3 or MongoDB.
-- Implement efficient serialisation (Protobuf).
-#### **Phase 5: Dashboard and Monitoring (2 Weeks)**
-- Build a Java-based monitoring dashboard.
-- Integrate Prometheus/Grafana for advanced metrics.
-#### **Phase 6: Advanced Features (Optional, 3 Weeks)**
-- Add stream joins and complex event processing.
-- Test dynamic scaling and exactly-once semantics.
-
-
-### **Project Setup**
-- [ ] **Set up development environment for C++ and Java**
-- [ ] **Choose and configure libraries:**
-    - Kafka (for stream ingestion and partitioning)
-    - gRPC (for inter-node communication)
-    - Boost.Asio (for networking)
-    - Protocol Buffers (for serialisation)
-    - AWS S3 SDK (for storage integration)
-    - Spring Boot (for monitoring dashboard)
-- [x] **Set up version control** (e.g., Git repository)
----
-
-### **2. Ingestion Layer (Java)**
-- [ ] **Implement Kafka consumer for stream ingestion**
-- [ ] **Partition data** and distribute to processing nodes
-- [ ] **Create API for submitting stream processing jobs**
-- [ ] **Handle errors** and retries in the ingestion process
----
-
-### **3. Stream Processing Engine (C++)**
-- [ ] **Design stream processing architecture**
-- [ ] **Implement core processing features**:
-    - Filtering data
-    - Transformation of data
-    - Aggregations (sum, count, etc.)
-    - Windowing operations (sliding, tumbling, session)
-- [ ] **Implement leaderless fault tolerance** using quorum-based consistency
-- [ ] **Handle dynamic scaling** of processing nodes
-- [ ] **Design efficient **serialisation using Protocol Buffers
----
-
-### **4. Fault Tolerance**
-- [ ] **Implement leaderless fault tolerance** with a quorum-based model for consistency
-- [ ] **Ensure high availability** by replicating data across nodes
-- [ ] **Handle node failures** gracefully (recovery and task reassignment)
-- [ ] **Implement exactly-once semantics** (for message delivery guarantee)
----
-
-### **5. Storage Integration (Amazon S3)**
-- [ ] **Integrate Amazon S3 for storage** of processed data
-- [ ] **Efficiently write large volumes of data** to S3 using the AWS SDK
-- [ ] **Design schema for storing stream results** (e.g., partition by time)
-- [ ] **Implement read operations** from S3 (if needed for retrieval or analytics)
----
-
-### **6. Monitoring and Dashboard (Java)**
-- [ ] **Design the monitoring dashboard architecture**
-- [ ] **Integrate Prometheus for metrics collection** (throughput, latency, task status)
-- [ ] **Implement real-time visualization** using Grafana or custom UI (Java + Spring Boot)
-- [ ] **Display node health, error rates, and scaling status**
-- [ ] **Set up alerting for failures** or performance degradation
----
-
-### **7. Testing and Validation**
-- [ ] **Write unit tests** for stream processing operations
-- [ ] **Test fault tolerance and failure scenarios** (node crashes, network partitions)
-- [ ] **Verify storage integration** by checking data durability in S3
-- [ ] **Validate data consistency** across processing nodes
-- [ ] **Test dynamic scaling** when nodes join/leave the cluster
----
-
-### **8. Optimization**
-- [ ] **Profile and optimize performance** (latency, throughput)
-- [ ] **Optimize Kafka partitions and consumer groups** for better load balancing
-- [ ] **Tune memory and CPU usage** in the C++ processing engine
-- [ ] **Improve network efficiency** for inter-node communication
----
-
-### **9. Documentation and Deployment**
-- [ ] **Document the architecture** and system design
-- [ ] **Write a detailed README** for project setup and usage instructions
-- [ ] **Prepare a deployment plan** (deployment on cloud or local machines)
-- [ ] **Publish the project on GitHub** with proper README and documentation
----
-
-### **10. Bonus/Advanced Features** (Optional)
-- [ ] **Implement complex event processing** (detecting patterns or anomalies)
-- [ ] **Add stream joins** for combining multiple streams (e.g., enrich data)
-- [ ] **Enable exactly-once semantics** for Kafka consumers
-- [ ] **Optimize storage layer** (e.g., add indexing for faster access to S3 data)
+    - Real-time dashboards for monitoring system health, load distribution, and processing metrics.
+    - Integration with Prometheus and Grafana for customizable alerts and visualizations.
+## Key Technologies
+- **Programming Language**: C++ and Java.
+- **Stream Framework**: Kafka.
+- **Storage**: Amazon S3 for OLAP cube storage.
+- **Coordination**: Zookeeper for distributed coordination.
+- **Visualization**: Grafana dashboards for real-time insights and Prometheus for metrics collection.
 
 
 
 
 
 
-<!--- Eraser file: https://app.eraser.io/workspace/PDMLqW8ynWhYWrt5FtcB --->
+<!--- Eraser file: https://app.eraser.io/workspace/CWCfygfB1w55luilceE3 --->
