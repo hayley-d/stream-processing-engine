@@ -13,3 +13,11 @@ Isolates the Kafka-specific code and keeps the stream ingestion logic modular an
 
 ### Config.java
 - Manages configuration settings for kafka(broker addresses,topics,consumer groups)
+
+## Setup
+.env file that contains the following:
+```
+KAFKA_BROKER=<url>
+KAFKA_TOPIC=<node.health/request.traffic/system.errors>
+KAFKA_CONSUMER_GROUP=<group_name>
+```
