@@ -1,7 +1,7 @@
 <p><a target="_blank" href="https://app.eraser.io/workspace/CWCfygfB1w55luilceE3" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
 
 # Stream Processing Engine with Distributed OLAP Insights
-This is a scalable and fault-tolerant distributed system designed to process high-throughput data streams while providing insightful analytics through an OLAP (Online Analytical Processing) cube. The engine is optimized for real-time performance, load balancing, and fault tolerance, aligning with modern distributed system principles. Seamless integration with Amazon S3 ensures secure and scalable data storage for OLAP cubes.
+This is a scalable and fault-tolerant distributed system designed to process high-throughput data streams while providing insightful analytics into Load Balancing and Scaling and Monitoring Distributed System Health through an OLAP (Online Analytical Processing) cube. The engine is optimized for real-time performance, load balancing, and fault tolerance, aligning with modern distributed system principles. Seamless integration with Amazon S3 ensures secure and scalable data storage for OLAP cubes.
 
 ## Features
 - **Real-Time Stream Processing**:
