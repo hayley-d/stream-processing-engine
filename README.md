@@ -46,6 +46,44 @@ This is a scalable and fault-tolerant distributed system designed to process hig
 - **Visualization**: Grafana dashboards for real-time insights and Prometheus for metrics collection.
 
 
+## Kafka Topics
+The Stream Processing Engine uses the following Kafka topics for data ingestion:
+
+### node.health
+**Description**: Captures periodic health metrics from each node in the system.
+
+**Fields**:
+
+- `node_id`: Unique identifier for the node in the cluster.
+- `cpu_usage` : Percentage of CPU usage.
+- `memory_usage` : Percentage of memory usage.
+- `disk_usage` : Percentage of disk usage.
+- `network_usage` : Percentage of network bandwidth usage.
+- `system_load` : Overall system load.
+
+
+### request.traffic
+**Description**: Logs every request processed by the system for traffic analysis.
+
+**Fields**:
+
+- `node_id` : Unique identifier of the node processing the request.
+- `request_id` : Unique identifier for the request.
+- `client_ip` : IP address of the client making the request.
+- `request_timestamp` : Timestamp when the request was received.
+- `response_timestamp` : Timestamp when the response was sent.
+- `status_code` : HTTP status code of the response.
+- `protocol` : Protocol used.
+
+
+### system.errors
+**Description**: Tracks errors occurring within the system for diagnostics.
+
+**Fields**:
+
+- `node_id` : Unique identifier of the node where the error occurred.
+- `timestamp` : Time of the error occurrence.
+- `error_type` : Type or category of the error (e.g., timeout, connection error, memory overflow).
 
 
 
