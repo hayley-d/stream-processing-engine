@@ -9,10 +9,12 @@ import java.util.Properties;
 
 public class Main {
     public static void main(String [] args) {
+        Consumer<Long,String> consumer = createConsumer();
+    }
+
+    private static Consumer<Long,String> createConsumer() {
         Dotenv dotenv = Dotenv.load();
         String topic = dotenv.get("KAFKA_TOPIC");
-        String topic = dotenv.get("KAFKA_TOPIC");
-        String bootstrap = dotenv.get("KAFKA_BOOTSTRAP");
 
         Properties props = new Properties();
         props.put("bootstrap.servers",dotenv.get("KAFKA_BROKER"));
@@ -23,6 +25,8 @@ public class Main {
         final Consumer<Long,String> consumer = new KafkaConsumer<>(props);
 
 
+        consumer.subscribe(Collections.singletonList(topic));
 
+        return consumer;
     }
 }
