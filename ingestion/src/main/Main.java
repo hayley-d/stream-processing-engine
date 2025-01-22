@@ -32,68 +32,84 @@ public class Main {
         logger.error("Error running Kafka consumer", e);
     }
   }
+
   /**
    * Creates and configures the Kafka consumer.
    *
    * @param dotenv Dotenv instance to load environment variables.
    * @return Configured Kafka consumer.
    */
-  private static Consumer<Long, String> createConsumer(Dotenv dotenv) {
-    String topic = dotenv.get("KAFKA_TOPIC");
-    String bootstrapServers = dotenv.get("KAFKA_BROKER");
-    String groupId = dotenv.get("KAFKA_GROUP_ID");
-    Properties props = new Properties();
-    props.put("bootstrap.servers", bootstrapServers);
-    props.put("group.id", groupId);
-    props.put("key.deserializer", LongDeserializer.class.getName());
-    props.put("value.deserializer", StringDeserializer.class.getName());
-    props.put("enable.auto.commit", "true"); // Enables automatic offset commit
-    props.put("auto.commit.interval.ms", "1000");
-    Consumer<Long, String> consumer = new KafkaConsumer<>(props);
-    consumer.subscribe(Collections.singletonList(topic));
-    return consumer;
-  }
+    private static Consumer<Long, String> createConsumer(Dotenv dotenv) {
+        String topic = dotenv.get("KAFKA_TOPIC");
+        String bootstrapServers = dotenv.get("KAFKA_BROKER");
+        String groupId = dotenv.get("KAFKA_GROUP_ID");
+
+        Properties props = new Properties();
+        props.put("bootstrap.servers", bootstrapServers);
+        props.put("group.id", groupId);
+        props.put("key.deserializer", LongDeserializer.class.getName());
+        props.put("value.deserializer", StringDeserializer.class.getName());
+        props.put("enable.auto.commit", "true"); // Enables automatic offset commit
+        props.put("auto.commit.interval.ms", "1000");
+
+        Consumer<Long, String> consumer = new KafkaConsumer<>(props);
+        consumer.subscribe(Collections.singletonList(topic));
+        return consumer;
+   }
+
+    /**
+     * Adds a shutdown hook to gracefully close the Kafka consumer.
+     *
+     * @param consumer Kafka consumer instance.
+     */
+    private static void addShutdownHook(Consumer<Long, String> consumer) {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            logger.info("Shutting down consumer...");
+            consumer.wakeup();
+        }));
+    }
+
   /**
    * Runs the Kafka consumer loop to process messages.
    *
    * @param consumer Kafka consumer instance.
    */
-  static void runConsumer(Consumer<Long, String> consumer) {
-    final int giveUpThreshold = 100;
-    int noRecordCount = 0;
-    Dotenv dotenv = Dotenv.load();
-    String processingServerUri = dotenv.get("PROCESSING_SERVER_URI");
-    System.out.println("Kafka consumer is running...");
-    try {
-      while (true) {
-        ConsumerRecords<Long, String> records =
-            consumer.poll(Duration.ofMillis(1000));
-        if (records.isEmpty()) {
-          noRecordCount++;
-          if (noRecordCount > giveUpThreshold) {
-            System.out.println(
-                "No messages received for a while. Shutting down...");
-            break;
+    static void runConsumer(Consumer<Long, String> consumer) {
+        final int giveUpThreshold = 100;
+        int noRecordCount = 0;
+        Dotenv dotenv = Dotenv.load();
+        String processingServerUri = dotenv.get("PROCESSING_SERVER_URI");
+        System.out.println("Kafka consumer is running...");
+        try {
+          while (true) {
+            ConsumerRecords<Long, String> records =
+                consumer.poll(Duration.ofMillis(1000));
+            if (records.isEmpty()) {
+              noRecordCount++;
+              if (noRecordCount > giveUpThreshold) {
+                System.out.println(
+                    "No messages received for a while. Shutting down...");
+                break;
+              }
+              continue;
+            }
+            noRecordCount = 0;
+            records.forEach(record -> {
+              System.out.printf(
+                  "Received message: Key=%d, Value=%s, Partition=%d, Offset=%d%n",
+                  record.key(), record.value(), record.partition(),
+                  record.offset());
+              processMessage(record.key(), record.value(), processingServerUri,dotenv.get("KAFKA_TOPIC"));
+            });
           }
-          continue;
+        } catch (Exception e) {
+          System.err.println("Error in consumer loop: " + e.getMessage());
+          e.printStackTrace();
+        } finally {
+          System.out.println("Closing Kafka consumer...");
+          consumer.close();
         }
-        noRecordCount = 0;
-        records.forEach(record -> {
-          System.out.printf(
-              "Received message: Key=%d, Value=%s, Partition=%d, Offset=%d%n",
-              record.key(), record.value(), record.partition(),
-              record.offset());
-          processMessage(record.key(), record.value(), processingServerUri,dotenv.get("KAFKA_TOPIC"));
-        });
-      }
-    } catch (Exception e) {
-      System.err.println("Error in consumer loop: " + e.getMessage());
-      e.printStackTrace();
-    } finally {
-      System.out.println("Closing Kafka consumer...");
-      consumer.close();
     }
-  }
 
   
       /**
