@@ -25,7 +25,4 @@ REQUEST_TRAFFIC_SCHEMA=src/main/resources/avro/request_traffic.avsc
 SYSTEM_ERRORS_SCHEMA=src/main/resources/avro/system_errors.avsc
 ```
 
-
-
-
 <!--- Eraser file: https://app.eraser.io/workspace/AQbnNCWOnQ7kP7LTIxlv --->
