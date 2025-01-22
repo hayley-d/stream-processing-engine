@@ -83,7 +83,7 @@ public class Main {
               "Received message: Key=%d, Value=%s, Partition=%d, Offset=%d%n",
               record.key(), record.value(), record.partition(),
               record.offset());
-          processMessage(record.key(), record.value(), processingServerUri);
+          processMessage(record.key(), record.value(), processingServerUri,dotenv.get("KAFKA_TOPIC"));
         });
       }
     } catch (Exception e) {
