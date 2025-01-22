@@ -79,19 +79,18 @@ public class Main {
         int noRecordCount = 0;
         Dotenv dotenv = Dotenv.load();
         String processingServerUri = dotenv.get("PROCESSING_SERVER_URI");
-        System.out.println("Kafka consumer is running...");
+        logger.info("Kafka consumer is running...");
+
         try {
           while (true) {
-            ConsumerRecords<Long, String> records =
-                consumer.poll(Duration.ofMillis(1000));
+            ConsumerRecords<Long, String> records = consumer.poll(Duration.ofMillis(1000));
             if (records.isEmpty()) {
-              noRecordCount++;
-              if (noRecordCount > giveUpThreshold) {
-                System.out.println(
-                    "No messages received for a while. Shutting down...");
-                break;
-              }
-              continue;
+                noRecordCount++;
+                if (noRecordCount > giveUpThreshold) {
+                    logger.warn("No messages received for a while. Shutting down...");
+                    break;
+                }
+                continue;
             }
             noRecordCount = 0;
             records.forEach(record -> {
