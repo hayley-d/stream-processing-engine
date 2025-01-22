@@ -7,6 +7,19 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.Encoder;
+import org.apache.avro.io.EncoderFactory;
+import org.apache.avro.specific.SpecificDatumWriter;
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.serialization.LongDeserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
+
 public class Main {
   public static void main(String[] args) {
     // Load environment variables
@@ -45,9 +58,11 @@ public class Main {
    *
    * @param consumer Kafka consumer instance.
    */
-  private static void runConsumer(Consumer<Long, String> consumer) {
-    final int giveUpThreshold = 100; // Maximum polls with no records
+  static void runConsumer(Consumer<Long, String> consumer) {
+    final int giveUpThreshold = 100;
     int noRecordCount = 0;
+    Dotenv dotenv = Dotenv.load();
+    String processingServerUri = dotenv.get("PROCESSING_SERVER_URI");
     System.out.println("Kafka consumer is running...");
     try {
       while (true) {
@@ -62,14 +77,14 @@ public class Main {
           }
           continue;
         }
-        noRecordCount = 0; // Reset counter when records are received
+        noRecordCount = 0;
         records.forEach(record -> {
           System.out.printf(
               "Received message: Key=%d, Value=%s, Partition=%d, Offset=%d%n",
               record.key(), record.value(), record.partition(),
               record.offset());
-          // Process the message
-          processMessage(record.value());
+          // Process the message using Avro serialization
+          processMessage(record.key(), record.value(), processingServerUri);
         });
       }
     } catch (Exception e) {
@@ -91,18 +106,6 @@ public class Main {
                       message);
     // Replace with real implementation, e.g., via gRPC, REST API, or IPC
   }
-import org.apache.avro.Schema;
-import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.io.DatumWriter;
-import org.apache.avro.io.Encoder;
-import org.apache.avro.io.EncoderFactory;
-import org.apache.avro.specific.SpecificDatumWriter;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.LongDeserializer;
-import org.apache.kafka.common.serialization.StringDeserializer;
 
   private static final String AVRO_SCHEMA = "" "
   {
