@@ -109,9 +109,12 @@ public class Main {
 
   
       /**
-       * Processes a single message (simulated by passing it to a C++ system).
-       *
-       * @param message The message to process.
+       * Processes a single message.       
+       * 
+       * @param key The message key.
+       * @param value The message vlaue.
+       * @param processingServerUri The uri for the server to process the event.
+       * @param topic The topic the consumer is subscribed to.
        */
       private static void processMessage(long key, String value, String processingServerUri,String topic) {
         try {
@@ -129,7 +132,7 @@ public class Main {
             byte[] avroData = outputStream.toByteArray();
             sendToProcessingServer(avroData, processingServerUri);
         } catch (Exception e) {
-            System.err.printf("Error processing message with Avro: %s%n",e.getMessage());
+            logger.error("Error processing message with Avro: {}",e.getMessage());
             e.printStackTrace();
         }
   }
