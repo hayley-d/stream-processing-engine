@@ -95,38 +95,30 @@ public class Main {
     }
   }
 
-  private static final String AVRO_SCHEMA = "" "{
-    "type" : "record",
-             "name" : "Message",
-             "namespace" : "com.example.avro",
-             "fields" : [
-                  {"name" : "key", "type" : "long"},
-                  {"name" : "value", "type" : "string"}
-             ]
-  }"" ";
-
+  
       /**
        * Processes a single message (simulated by passing it to a C++ system).
        *
        * @param message The message to process.
        */
-      private static void processMessage(long key, String value, String processingServerUri) {
+      private static void processMessage(long key, String value, String processingServerUri,String topic) {
         try {
-          Schema schema = new Schema.Parser().parse(AVRO_SCHEMA);
-          GenericRecord record = new GenericData.Record(schema);
-          record.put("key", key);
-          record.put("value", value);
+            String schemaPath = getSchemaPath(topic);
+            Schema schema = loadSchema(schemaPath);
+            GenericRecord record = new GenericData.Record(schema);
+            record.put("key", key);
+            record.put("value", value);
 
-          ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-          DatumWriter<GenericRecord> writer = new SpecificDatumWriter<>(schema);
-          Encoder encoder = EncoderFactory.get().binaryEncoder(outputStream, null);
-          writer.write(record, encoder);
-          encoder.flush();
-          byte[] avroData = outputStream.toByteArray();
-          sendToProcessingServer(avroData, processingServerUri);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            DatumWriter<GenericRecord> writer = new SpecificDatumWriter<>(schema);
+            Encoder encoder = EncoderFactory.get().binaryEncoder(outputStream, null);
+            writer.write(record, encoder);
+            encoder.flush();
+            byte[] avroData = outputStream.toByteArray();
+            sendToProcessingServer(avroData, processingServerUri);
         } catch (Exception e) {
-          System.err.printf("Error processing message with Avro: %s%n",e.getMessage());
-          e.printStackTrace();
+            System.err.printf("Error processing message with Avro: %s%n",e.getMessage());
+            e.printStackTrace();
         }
   }
 
