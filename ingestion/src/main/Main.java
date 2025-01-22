@@ -18,6 +18,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Main {
   public static void main(String[] args) {
@@ -154,4 +156,33 @@ public class Main {
         e.printStackTrace();
     }
   }
+
+
+    /**
+     * Utility function to load the Avro schema from a file.
+     */
+    private static Schema loadSchema(String schemaPath) throws Exception {
+        String schemaString = new String(Files.readAllBytes(Paths.get(schemaPath)));
+        return new Schema.Parser().parse(schemaString);
+    }
+
+    /**
+     * Utility function to dynamically determine what schema to load based on the topic defined in the .env
+     */
+    private static String getSchemaPath(String topic) {
+        Dotenv dotenv = Dotenv.load();
+        switch (topic) {
+            case "system.health":
+                return dotenv.get("SYSTEM_HEALTH_SCHEMA");
+            case "request.traffic":
+                return dotenv.get("REQUEST_TRAFFIC_SCHEMA");
+            case "system.errors":
+                return dotenv.get("SYSTEM_ERRORS_SCHEMA");
+            default:
+                throw new IllegalArgumentException("Unknown topic: " + topic);
+        }
+    }
+}
+
+
 }
