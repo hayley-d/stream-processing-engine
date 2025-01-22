@@ -20,6 +20,9 @@ KAFKA_TOPIC=<topic_name>
 KAFKA_BROKER=<uri>
 KAFKA_GROUP_ID=<group_id>
 PROCESSING_SERVER_URI=<uri>
+SYSTEM_HEALTH_SCHEMA=src/main/resources/avro/system_health.avsc
+REQUEST_TRAFFIC_SCHEMA=src/main/resources/avro/request_traffic.avsc
+SYSTEM_ERRORS_SCHEMA=src/main/resources/avro/system_errors.avsc
 ```
 
 
