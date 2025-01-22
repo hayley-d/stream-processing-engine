@@ -92,21 +92,18 @@ public class Main {
                 }
                 continue;
             }
+
             noRecordCount = 0;
             records.forEach(record -> {
-              System.out.printf(
-                  "Received message: Key=%d, Value=%s, Partition=%d, Offset=%d%n",
-                  record.key(), record.value(), record.partition(),
-                  record.offset());
+              logger.info("Received message: Key={}, Value={}, Partition={}, Offset={}",record.key(), record.value(), record.partition(),record.offset());
               processMessage(record.key(), record.value(), processingServerUri,dotenv.get("KAFKA_TOPIC"));
             });
           }
         } catch (Exception e) {
-          System.err.println("Error in consumer loop: " + e.getMessage());
-          e.printStackTrace();
+            logger.error("Error in consumer loop: " + e.getMessage());
         } finally {
-          System.out.println("Closing Kafka consumer...");
-          consumer.close();
+            logger.info("Closing Kafka consumer...");
+            consumer.close()
         }
     }
 
