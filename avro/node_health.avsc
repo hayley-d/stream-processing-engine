@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "NodeHealth",
+  "namespace": "com.streamprocessing",
+  "fields": [
+    {"name": "nodeId", "type": "string"},
+    {"name": "cpuUsage", "type": "float"},
+    {"name": "memoryUsage", "type": "float"},
+    {"name": "diskUsage", "type": "float"},
+    {"name": "networkUsage", "type": "float"},
+    {"name": "systemLoad", "type":"float"},
+    {"name": "timestamp", "type":"string"},
+  ]
+}
+
+

@@ -95,17 +95,6 @@ public class Main {
       consumer.close();
     }
   }
-  /**
-   * Processes a single message (simulated by passing it to a C++ system).
-   *
-   * @param message The message to process.
-   */
-  private static void processMessage(String message) {
-    // Simulate sending the message to a C++ system
-    System.out.printf("Processing message: %s (Simulated pass to C++ system)%n",
-                      message);
-    // Replace with real implementation, e.g., via gRPC, REST API, or IPC
-  }
 
   private static final String AVRO_SCHEMA = "" "
   {
@@ -120,32 +109,35 @@ public class Main {
   }
   "" ";
 
-      private static void
-      processMessage(long key, String value, String processingServerUri) {
-    try {
-      // Parse the schema
-      Schema schema = new Schema.Parser().parse(AVRO_SCHEMA);
+      /**
+       * Processes a single message (simulated by passing it to a C++ system).
+       *
+       * @param message The message to process.
+       */
+      private static void processMessage(long key, String value, String processingServerUri) {
+        try {
+          Schema schema = new Schema.Parser().parse(AVRO_SCHEMA);
 
-      // Create a generic record for the message
-      GenericRecord record = new GenericData.Record(schema);
-      record.put("key", key);
-      record.put("value", value);
+          // Create a generic record for the message
+          GenericRecord record = new GenericData.Record(schema);
+          record.put("key", key);
+          record.put("value", value);
 
-      // Serialize the record to Avro binary format
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      DatumWriter<GenericRecord> writer = new SpecificDatumWriter<>(schema);
-      Encoder encoder = EncoderFactory.get().binaryEncoder(outputStream, null);
-      writer.write(record, encoder);
-      encoder.flush();
-      byte[] avroData = outputStream.toByteArray();
+          // Serialize the record to Avro binary format
+          ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+          DatumWriter<GenericRecord> writer = new SpecificDatumWriter<>(schema);
+          Encoder encoder = EncoderFactory.get().binaryEncoder(outputStream, null);
+          writer.write(record, encoder);
+          encoder.flush();
+          byte[] avroData = outputStream.toByteArray();
 
-      // Send the Avro-encoded data to the processing server
-      sendToProcessingServer(avroData, processingServerUri);
-    } catch (Exception e) {
-      System.err.printf("Error processing message with Avro: %s%n",
-                        e.getMessage());
-      e.printStackTrace();
-    }
+          // Send the Avro-encoded data to the processing server
+          sendToProcessingServer(avroData, processingServerUri);
+        } catch (Exception e) {
+          System.err.printf("Error processing message with Avro: %s%n",
+                            e.getMessage());
+          e.printStackTrace();
+        }
   }
 
   private static void sendToProcessingServer(byte[] avroData,
