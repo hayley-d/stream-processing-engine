@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "name": "SystemErrors",
+  "namespace": "com.streamprocessing",
+  "fields": [
+    {"name": "NodeID", "type": "string"},
+    {"name": "timestamp", "type": "string"},
+    {"name": "error_type", "type": "string"},
+    {"name": "geolocation", "type": "string"}
+  ]
+}
+
