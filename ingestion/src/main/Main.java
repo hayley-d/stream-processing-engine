@@ -166,18 +166,24 @@ public class Main {
             logger.error("Failed to process message. Server returned: {}",responseCode);
           }
         } catch (Exception e) {
-            System.err.printf("Error sending Avro data to processing server: %s%n",e.getMessage());
-            e.printStackTrace();
+            logger.error("Error sending Avro data to processing server");
         }
   }
 
 
     /**
      * Utility function to load the Avro schema from a file.
+     * @param The path to the correct schema file.
      */
     private static Schema loadSchema(String schemaPath) throws Exception {
-        String schemaString = new String(Files.readAllBytes(Paths.get(schemaPath)));
-        return new Schema.Parser().parse(schemaString);
+        return schemaCache.computeIfAbsent(schemaPath, path -> {
+            try {
+                String schemaString = new String(Files.readAllBytes(Paths.get(path)));
+                return new Schema.Parser().parse(schemaString);
+            } catch (Exception e) {
+                throw new RuntimeException("Error loading schema: " + path, e);
+            }
+        });
     }
 
     /**
