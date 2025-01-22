@@ -1,5 +1,4 @@
 package com.cloudurable.kafka;
-
 import io.github.cdimascio.dotenv.Dotenv;
 import java.io.ByteArrayOutputStream;
 import java.net.HttpURLConnection;
@@ -22,9 +21,8 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 public class Main {
   public static void main(String[] args) {
-    // Load environment variables
     Dotenv dotenv = Dotenv.load();
-    // Create and run the Kafka consumer
+
     try (Consumer<Long, String> consumer = createConsumer(dotenv)) {
       runConsumer(consumer);
     } catch (Exception e) {
@@ -83,7 +81,6 @@ public class Main {
               "Received message: Key=%d, Value=%s, Partition=%d, Offset=%d%n",
               record.key(), record.value(), record.partition(),
               record.offset());
-          // Process the message using Avro serialization
           processMessage(record.key(), record.value(), processingServerUri);
         });
       }
@@ -96,18 +93,15 @@ public class Main {
     }
   }
 
-  private static final String AVRO_SCHEMA = "" "
-  {
+  private static final String AVRO_SCHEMA = "" "{
     "type" : "record",
-               "name" : "Message",
-                          "namespace" : "com.example.avro",
-                                          "fields"
-        : [
-          {"name" : "key", "type" : "long"},
-          {"name" : "value", "type" : "string"}
-        ]
-  }
-  "" ";
+             "name" : "Message",
+             "namespace" : "com.example.avro",
+             "fields" : [
+                  {"name" : "key", "type" : "long"},
+                  {"name" : "value", "type" : "string"}
+             ]
+  }"" ";
 
       /**
        * Processes a single message (simulated by passing it to a C++ system).
@@ -117,37 +111,28 @@ public class Main {
       private static void processMessage(long key, String value, String processingServerUri) {
         try {
           Schema schema = new Schema.Parser().parse(AVRO_SCHEMA);
-
-          // Create a generic record for the message
           GenericRecord record = new GenericData.Record(schema);
           record.put("key", key);
           record.put("value", value);
 
-          // Serialize the record to Avro binary format
           ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
           DatumWriter<GenericRecord> writer = new SpecificDatumWriter<>(schema);
           Encoder encoder = EncoderFactory.get().binaryEncoder(outputStream, null);
           writer.write(record, encoder);
           encoder.flush();
           byte[] avroData = outputStream.toByteArray();
-
-          // Send the Avro-encoded data to the processing server
           sendToProcessingServer(avroData, processingServerUri);
         } catch (Exception e) {
-          System.err.printf("Error processing message with Avro: %s%n",
-                            e.getMessage());
+          System.err.printf("Error processing message with Avro: %s%n",e.getMessage());
           e.printStackTrace();
         }
   }
 
-  private static void sendToProcessingServer(byte[] avroData,
-                                             String processingServerUri) {
+  private static void sendToProcessingServer(byte[] avroData,String processingServerUri) {
     try {
-      // Create a connection to the processing server
       URL url = new URL(processingServerUri);
       HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
-      // Configure the request
       connection.setRequestMethod("POST");
       connection.setRequestProperty("Content-Type", "application/avro-binary");
       connection.setDoOutput(true);
@@ -158,18 +143,15 @@ public class Main {
         outputStream.flush();
       }
 
-      // Check the response
       int responseCode = connection.getResponseCode();
       if (responseCode == HttpURLConnection.HTTP_OK) {
         System.out.println("Message processed successfully by the server.");
       } else {
-        System.err.printf("Failed to process message. Server returned: %d%n",
-                          responseCode);
+        System.err.printf("Failed to process message. Server returned: %d%n",responseCode);
       }
     } catch (Exception e) {
-      System.err.printf("Error sending Avro data to processing server: %s%n",
-                        e.getMessage());
-      e.printStackTrace();
+        System.err.printf("Error sending Avro data to processing server: %s%n",e.getMessage());
+        e.printStackTrace();
     }
   }
 }
