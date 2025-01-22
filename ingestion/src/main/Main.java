@@ -26,10 +26,10 @@ public class Main {
     Dotenv dotenv = Dotenv.load();
 
     try (Consumer<Long, String> consumer = createConsumer(dotenv)) {
-      runConsumer(consumer);
+        addShutdownHook(consumer);
+        runConsumer(consumer);
     } catch (Exception e) {
-      System.err.println("Error running Kafka consumer: " + e.getMessage());
-      e.printStackTrace();
+        logger.error("Error running Kafka consumer", e);
     }
   }
   /**
