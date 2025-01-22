@@ -137,31 +137,38 @@ public class Main {
         }
   }
 
-  private static void sendToProcessingServer(byte[] avroData,String processingServerUri) {
-    try {
-      URL url = new URL(processingServerUri);
-      HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+    
+    /**
+     * Function to send the event to the processing server for futhur processing.
+     *
+     * @param avroData The avro data consumed from the Kafka broker.
+     * @param processingServerUri The uri for the processing server to send the data to.
+     */
+    private static void sendToProcessingServer(byte[] avroData,String processingServerUri) {
+        try {
+          URL url = new URL(processingServerUri);
+          HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 
-      connection.setRequestMethod("POST");
-      connection.setRequestProperty("Content-Type", "application/avro-binary");
-      connection.setDoOutput(true);
+          connection.setRequestMethod("POST");
+          connection.setRequestProperty("Content-Type", "application/avro-binary");
+          connection.setDoOutput(true);
 
-      // Send the Avro data
-      try (OutputStream outputStream = connection.getOutputStream()) {
-        outputStream.write(avroData);
-        outputStream.flush();
-      }
+          // Send the Avro data
+          try (OutputStream outputStream = connection.getOutputStream()) {
+            outputStream.write(avroData);
+            outputStream.flush();
+          }
 
-      int responseCode = connection.getResponseCode();
-      if (responseCode == HttpURLConnection.HTTP_OK) {
-        System.out.println("Message processed successfully by the server.");
-      } else {
-        System.err.printf("Failed to process message. Server returned: %d%n",responseCode);
-      }
-    } catch (Exception e) {
-        System.err.printf("Error sending Avro data to processing server: %s%n",e.getMessage());
-        e.printStackTrace();
-    }
+          int responseCode = connection.getResponseCode();
+          if (responseCode == HttpURLConnection.HTTP_OK) {
+            logger.info("Message processed successfully by the server.");
+          } else {
+            logger.error("Failed to process message. Server returned: {}",responseCode);
+          }
+        } catch (Exception e) {
+            System.err.printf("Error sending Avro data to processing server: %s%n",e.getMessage());
+            e.printStackTrace();
+        }
   }
 
 
