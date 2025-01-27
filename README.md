@@ -7,8 +7,6 @@ Implementation of a **Distributed Graph Database Engine **designed to efficientl
 - **Distributed  Architecture: **The database is designed to scale horizontally across multiple nodes, distributing graph data efficiently.
 - **Fault Tolerance:** Built-in mechanisms to handle node failures and ensure data consistency.
 - **Efficient Query Engine: **The OCaml query engine allows for complex graph traversal and querying.
-- **ACID Compliance: **Supports basic ACID properties for transactions in the graph database.
-- **Flexible Graph Models: **Supports directed, undirected and labeled graphs.
 - **Optimized Query Execution:** The OCaml query engine includes optimization features such as indexing and caching to improve query performance.
 ## System Overview
 ### 1. Database Engine (C++)
@@ -32,6 +30,42 @@ Implementation of a **Distributed Graph Database Engine **designed to efficientl
 - CMake: Required to build the C++ components.
 
 
+
+
+### Timeline
+#### 1. Core Graph Storage
+- Implement basic graph data structures (nodes, edges)
+- Use adjacency lists for efficient edge storage.
+- Implement a basic indexing mechanism (Index by node ID)
+
+
+#### 2. Simple query engine
+- Implement a basic parser for Gremlin
+- Implement basic graph traversal algorithms for simple query execution.
+
+
+#### 3. Sharding & Simple Distribution 
+- Implement sharding based on Node ID or simple partitioning
+- Repliate each shard across two nodes for fault tolerance
+- Implement basic query routing (Queries should know what shard to qyery based on the data)
+
+
+#### 4. Basic API
+- Expose a gRPC API for inserting data and quering the graph
+
+
+#### 5. Final Features
+- Integrate with ElastiCache for query caching
+- Finalize and document codebase
+
+
+### Later Additions
+#### 1. Consensus
+- Implement Paxos distributed consensus and multi-region replication.
+#### 2. Advanced Algorithms
+- Add complex graph algorithms
+#### 3. Advanced optimizations
+- Implement advanced query planning.
 
 
 
