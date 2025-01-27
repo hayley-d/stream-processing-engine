@@ -1,29 +1,15 @@
 <p><a target="_blank" href="https://app.eraser.io/workspace/CWCfygfB1w55luilceE3" id="edit-in-eraser-github-link"><img alt="Edit in Eraser" src="https://firebasestorage.googleapis.com/v0/b/second-petal-295822.appspot.com/o/images%2Fgithub%2FOpen%20in%20Eraser.svg?alt=media&amp;token=968381c8-a7e7-472a-8ed6-4a6626da5501"></a></p>
 
-# Stream Processing Engine with Distributed OLAP Insights
-This is a scalable and fault-tolerant distributed system designed to process high-throughput data streams while providing insightful analytics into Load Balancing and Scaling and Monitoring Distributed System Health through an OLAP (Online Analytical Processing) cube. The engine is optimized for real-time performance, load balancing, and fault tolerance, aligning with modern distributed system principles. Seamless integration with Amazon S3 ensures secure and scalable data storage for OLAP cubes.
+# Distributed Graph Database Engine
+Implementation of a **Distributed Graph Database Engine **designed to efficiently store and query large graph datasets. The system is composed of a C++ based database engine responsible for managing the distributed data storage and a query engine implemented in OCaml that facilitates expressive querying of graph data.
 
 ## Features
-- **Real-Time Stream Processing**:
-    - Ingest and process high-throughput streams of data in real-time.
-    - Support for sharding and partitioning for scalability.
-- **Load Balancing and Scaling Insights**: 
-    - Analyze the system's ability to distribute load efficiently across nodes.
-    - Identify scaling needs dynamically to ensure optimal resource usage.
-- **Fault Tolerance and Scalability**: 
-    - Implements leaderless fault tolerance for high availability.
-    - Dynamically scales to handle increased workloads, ensuring high performance even during peak traffic.
-- **Analytics Dashboards**: 
-    - Real-time load balancing and scaling metrics for monitoring trends and system health.
-- **Distributed OLAP Cube**: 
-    - Analyze data streams across multiple dimensions, latency, throughput, load distribution, and network performance.
-    - Leverages Amazon S3 for efficient, scalable storage and querying.
-    - Supports historical and real-time data analysis.
-    - Query Examples:
-        - "Which nodes in the cluster have the highest error rates?"
-        - "What are the latency patterns for specific regions over time?"
-        - "How does the load distribution vary across nodes and regions during peak traffic?"
-        - "Which nodes are underutilized or overloaded in real-time?"
+- Distributed  Architecture: The database is designed to scale horizontally across multiple nodes, distributing graph data efficiently.
+- Fault Tolerance: Built-in mechanisms to handle node failures and ensure data consistency.
+- Efficient Query Engine: The OCaml query engine allows for complex graph traversal and querying.
+- **ACID Compliance: **Supports basic ACID properties for transactions in the graph database.
+- **Flexible Graph Models: **Supports directed, undirected and labeled graphs.
+- **Optimized Query Execution:** The OCaml query engine includes optimization features such as indexing and caching to improve query performance.
 ## Architecture Overview
 - **Ingestion Layer (Java)**:
     - Kafka consumer to ingest data streams.
@@ -44,8 +30,6 @@ This is a scalable and fault-tolerant distributed system designed to process hig
 - **Storage**: Amazon S3 for OLAP cube storage.
 - **Coordination**: Zookeeper for distributed coordination.
 - **Visualization**: Grafana dashboards for real-time insights and Prometheus for metrics collection.
-
-
 ## Kafka Topics
 The Stream Processing Engine uses the following Kafka topics for data ingestion:
 
@@ -54,36 +38,32 @@ The Stream Processing Engine uses the following Kafka topics for data ingestion:
 
 **Fields**:
 
-- `node_id`: Unique identifier for the node in the cluster.
-- `cpu_usage` : Percentage of CPU usage.
-- `memory_usage` : Percentage of memory usage.
-- `disk_usage` : Percentage of disk usage.
-- `network_usage` : Percentage of network bandwidth usage.
-- `system_load` : Overall system load.
-
-
+- `node_id` : Unique identifier for the node in the cluster.
+- `cpu_usage`  : Percentage of CPU usage.
+- `memory_usage`  : Percentage of memory usage.
+- `disk_usage`  : Percentage of disk usage.
+- `network_usage`  : Percentage of network bandwidth usage.
+- `system_load`  : Overall system load.
 ### request.traffic
 **Description**: Logs every request processed by the system for traffic analysis.
 
 **Fields**:
 
-- `node_id` : Unique identifier of the node processing the request.
-- `request_id` : Unique identifier for the request.
-- `client_ip` : IP address of the client making the request.
-- `request_timestamp` : Timestamp when the request was received.
-- `response_timestamp` : Timestamp when the response was sent.
-- `status_code` : HTTP status code of the response.
-- `protocol` : Protocol used.
-
-
+- `node_id`  : Unique identifier of the node processing the request.
+- `request_id`  : Unique identifier for the request.
+- `client_ip`  : IP address of the client making the request.
+- `request_timestamp`  : Timestamp when the request was received.
+- `response_timestamp`  : Timestamp when the response was sent.
+- `status_code`  : HTTP status code of the response.
+- `protocol`  : Protocol used.
 ### system.errors
 **Description**: Tracks errors occurring within the system for diagnostics.
 
 **Fields**:
 
-- `node_id` : Unique identifier of the node where the error occurred.
-- `timestamp` : Time of the error occurrence.
-- `error_type` : Type or category of the error (e.g., timeout, connection error, memory overflow).
+- `node_id`  : Unique identifier of the node where the error occurred.
+- `timestamp`  : Time of the error occurrence.
+- `error_type`  : Type or category of the error (e.g., timeout, connection error, memory overflow).
 
 
 
