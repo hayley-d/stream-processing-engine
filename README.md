@@ -20,7 +20,20 @@ Implementation of a **Distributed Graph Database Engine **designed to efficientl
 
 
 ### 2. Query Engine (OCaml)
-- Query Parsing: 
+- **Query Parsing: **Supports **Gremlin** query language to allow users to define graph traversals and conditions.
+- **Query Execution:** Optimizes queries through indexing, pruning and caching of frequently used paths/nodes.
+- **Distributed Query Processing:** Supports parallel query execution across multiple nodes in the distributed system.
+
+
+## Setup and Installation
+### Prerequisites
+- C++ compiler: Ensure you have a C++ 14 or later compiler.
+- OCaml version 4.12+ installed.
+- CMake: Required to build the C++ components.
+
+
+
+
 
 
 
