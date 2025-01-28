@@ -1,13 +1,19 @@
 #ifndef EDGE_H
 #define EDGE_H
 
+#include "EdgeVersion.h"
+#include <memory>
+#include <vector> 
+
 class Edge {
 public:
-    int source_node_id;
-    int destination_node_id;
+    std::vector<EdgeVersion> versions;
 
-    Edge(int source, int dest): source_node_id(source), destination_node_id(dest) {};
+    Edge()=default;
     virtual void describe() const;
+    void add_version(int source, int destination, int version);
+    EdgeVersion* get_version(int version_id);
+    void garbage_collect(int min_version);
     virtual ~Edge() = default;
     
 };
